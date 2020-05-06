@@ -30,3 +30,44 @@ body {
 	height: 100vh;
 	width: 100vw;
 }
+
+form {
+	display: flex;
+	align-items: center;
+	margin-top: 50vh;
+}
+
+form input {
+	background: none;
+	border: 1px #fff solid;
+	border-left: 0;
+
+	height: 71px;
+	width: 38%;
+	padding: 15px;
+
+	color: white;
+	font-size: xx-large;
+	font-weight: 300;
+}
+
+form input::placeholder {
+	color: white;
+	font-size: xx-large;
+	font-weight: 300;
+}
+
+form button {
+	background: white;
+	border: 0;
+	border-radius: 0px 50px 50px 0px;
+
+	height: 71px;
+	width: 165px;
+
+	color: #bfbfbf;
+	font-size: xx-large;
+	font-weight: 300;
+	text-transform: uppercase;
+}
+/* 0,71 */
