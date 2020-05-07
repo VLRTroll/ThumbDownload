@@ -25,13 +25,14 @@ body {
 }
 
 #content {
-	position: absolute;
+	position: relative;
 
 	height: 100vh;
 	width: 100vw;
 }
 
 form {
+	position: relative;
 	display: flex;
 	align-items: center;
 	margin-top: 45vh;
@@ -145,7 +146,7 @@ img {
 	right: calc((100vw - 38% - 150px - 480px) / 2);
 
 	background: white;
-	margin-top: calc(50vh - 180px);
+	top: calc(-52.5vh + 180px);
 
 	height: 360px;
 	width: 480px;
