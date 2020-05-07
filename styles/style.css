@@ -1,6 +1,7 @@
 @import 'css-reset.css';
 @import 'animations.css';
 @import 'responsive.css';
+@import 'ux.css';
 
 body {
 	/* Remove o scroll da animação da tela */
@@ -66,7 +67,7 @@ form button {
 	border-radius: 0px 50px 50px 0px;
 
 	height: inherit;
-	width: 8vw;
+	width: 10vw;
 
 	color: #bfbfbf;
 	font-size: var(--form-font-size);
