@@ -147,7 +147,4 @@ img {
   background: white;
 
   position: absolute;
-  /* largura-da-tela - input - imagem */
-  right: calc((100vw - 38% - 150px - var(--img-width)) / 2);
-  bottom: calc((100vh - var(--img-height)) / 2);
 }

@@ -1,3 +1,17 @@
+/* Normal monitor */
+@media (max-width: 1920px) {
+  * {
+    --img-width: 680px;
+    --img-height: 480px;
+  }
+
+  img {
+    /* largura-da-tela - input - imagem */
+    right: calc((100vw - 38% - 150px - var(--img-width)) / 2);
+    bottom: calc((100vh - var(--img-height)) / 2);
+  }
+}
+
 @media (max-width: 1400px) {
   * {
     --img-width: 480px;
@@ -7,7 +21,26 @@
 
 @media (max-width: 1100px) {
   * {
-    --img-width: 320px;
-    --img-height: 180px;
+    --img-width: 480px;
+    --img-height: 360px;
+  }
+
+  div#content {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  div#content form {
+    margin-top: 5vh;
+  }
+
+  div#content div#download-options {
+    margin: auto;
+    margin-top: 30px;
+  }
+
+  img {
+    right: calc((100vw - var(--img-width)) / 2);
+    bottom: 12vh;
   }
 }
