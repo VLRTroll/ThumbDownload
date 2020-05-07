@@ -63,7 +63,7 @@ form button {
 	border-radius: 0px 50px 50px 0px;
 
 	height: 71px;
-	width: 165px;
+	width: 150px;
 
 	color: #bfbfbf;
 	font-size: xx-large;
@@ -80,7 +80,7 @@ form button {
 	/* (restante-da-tela - input - opções)/2 */
 	margin-top: calc((55vh - 71px - 172px) / 2);
 
-	margin-left: calc((38% + 165px - 536px) / 2);
+	margin-left: calc((38% + 150px - 536px) / 2);
 }
 
 #download-options > h1 {
@@ -137,4 +137,16 @@ form button {
 	font-size: xx-large;
 	font-weight: 400;
 	text-align: center;
+}
+
+img {
+	position: absolute;
+	/* largura-da-tela - input - imagem */
+	right: calc((100vw - 38% - 150px - 480px) / 2);
+
+	background: white;
+	margin-top: calc(50vh - 180px);
+
+	height: 360px;
+	width: 480px;
 }
