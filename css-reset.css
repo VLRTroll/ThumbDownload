@@ -31,6 +31,7 @@ ol {
 /* Constantes utilizadas no layout */
 * {
   --form-margin-top: 45vh;
+  --options-width: 40vw;
 
   --img-width: 1280px;
   --img-height: 720px;

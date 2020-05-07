@@ -1,11 +1,10 @@
-/* Normal monitor */
 @media (max-width: 1920px) {
   * {
     --img-width: 680px;
     --img-height: 480px;
   }
 
-  img {
+  div#content img {
     /* largura-da-tela - input - imagem */
     right: calc((100vw - 38% - 150px - var(--img-width)) / 2);
     bottom: calc((100vh - var(--img-height)) / 2);
@@ -34,13 +33,78 @@
     margin-top: 5vh;
   }
 
+  div#content form input {
+    width: 70%;
+  }
+
   div#content div#download-options {
     margin: auto;
     margin-top: 30px;
   }
 
-  img {
+  div#content img {
     right: calc((100vw - var(--img-width)) / 2);
     bottom: 12vh;
+  }
+}
+
+@media (max-width: 500px) {
+  * {
+    --img-width: 320px;
+    --img-height: 180px;
+  }
+
+  div#content form {
+    margin-top: 10vh;
+  }
+
+  div#content form input {
+    height: 50px;
+    width: 70%;
+  }
+
+  div#content form button {
+    height: 50px;
+    width: 120px;
+  }
+
+  form input,
+  form input::placeholder,
+  form button {
+    font-size: large;
+  }
+
+  div#content div#download-options {
+    margin: auto;
+    margin-top: 30px;
+    max-width: 85%;
+  }
+
+  div#content img {
+    right: calc((100vw - var(--img-width)) / 2);
+    bottom: 25vh;
+  }
+}
+
+@media (max-width: 420px) {
+  * {
+    --img-width: 320px;
+    --img-height: 180px;
+  }
+
+  div#content form input {
+    height: 50px;
+    width: 70%;
+  }
+
+  div#content form button {
+    height: 50px;
+    width: 100px;
+  }
+
+  #download-options ol li div p {
+    font-size: large;
+    font-weight: 400;
+    letter-spacing: -1px;
   }
 }
