@@ -1,153 +1,155 @@
-@import 'css-reset.css';
-@import 'animations.css';
+@import "css-reset.css";
+@import "animations.css";
 
 body {
-	/* Remove o scroll da animação da tela */
-	overflow: hidden;
+  /* Remove o scroll da animação da tela */
+  overflow: hidden;
 
-	background: #376996;
+  background: #376996;
 }
 
 #backgound {
-	position: relative;
-	display: flex;
+  position: relative;
+  display: flex;
 }
 
 .layer {
-	position: absolute;
-	top: -25vh;
-	/* left: 110vw; */
+  position: absolute;
+  top: -25vh;
+  /* left: 110vw; */
 
-	transform: rotate(22deg);
+  transform: rotate(22deg);
 
-	height: 200vh;
-	width: 100vw;
+  height: 200vh;
+  width: 100vw;
 }
 
 #content {
-	position: relative;
+  position: relative;
 
-	height: 100vh;
-	width: 100vw;
+  height: 55vh;
+  width: 100vw;
 }
 
 form {
-	position: relative;
-	display: flex;
-	align-items: center;
-	margin-top: 45vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 45vh;
 }
 
 form input {
-	background: none;
-	border: 1px #fff solid;
-	border-left: 0;
+  background: none;
+  border: 1px #fff solid;
+  border-left: 0;
 
-	height: 71px;
-	width: 38%;
-	padding: 15px;
+  height: 71px;
+  width: 38%;
+  padding: 15px;
 
-	color: white;
-	font-size: xx-large;
-	font-weight: 300;
+  color: white;
+  font-size: xx-large;
+  font-weight: 300;
 }
 
 form input::placeholder {
-	color: white;
-	font-size: xx-large;
-	font-weight: 300;
+  color: white;
+  font-size: xx-large;
+  font-weight: 300;
 }
 
 form button {
-	background: white;
-	border: 0;
-	border-radius: 0px 50px 50px 0px;
+  background: white;
+  border: 0;
+  border-radius: 0px 50px 50px 0px;
 
-	height: 71px;
-	width: 150px;
+  height: 71px;
+  width: 150px;
 
-	color: #bfbfbf;
-	font-size: xx-large;
-	font-weight: 300;
+  color: #bfbfbf;
+  font-size: xx-large;
+  font-weight: 300;
 }
 
 #download-options {
-	max-width: 536px;
-	width: 536px;
+  max-width: 536px;
+  width: 536px;
 
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-	/* (restante-da-tela - input - opções)/2 */
-	margin-top: calc((55vh - 71px - 172px) / 2);
+  /* (restante-da-tela - input - opções)/2 */
+  margin-top: calc((55vh - 71px - 172px) / 2);
 
-	margin-left: calc((38% + 150px - 536px) / 2);
+  margin-left: calc((38% + 150px - 536px) / 2);
 }
 
 #download-options > h1 {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 
-	color: white;
-	font-weight: 400;
-	font-size: 2.5rem;
-	text-align: center;
+  color: white;
+  font-weight: 400;
+  font-size: 2.5rem;
+  text-align: center;
 }
 
 #download-options ol {
-	display: flex;
+  display: flex;
 }
 
 #download-options ol li {
-	flex: 1;
+  flex: 1;
 }
 
 #download-options ol li h1 {
-	background: #8daac3;
-	border: 1px solid #707070;
+  background: #8daac3;
+  border: 1px solid #707070;
 
-	color: white;
-	font-size: large;
-	font-weight: 400;
-	text-align: center;
-	letter-spacing: -1px;
+  color: white;
+  font-size: large;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: -1px;
 }
 
 #download-options ol li div {
-	height: 50px;
-	background: #ffffff;
-	border: 1px solid #707070;
+  height: 50px;
+  background: #ffffff;
+  border: 1px solid #707070;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #download-options ol li div p {
-	color: #707070;
-	font-size: x-large;
-	font-weight: 300;
-	text-align: center;
+  color: #707070;
+  font-size: x-large;
+  font-weight: 300;
+  text-align: center;
 }
 
 #download-options div {
-	height: 40px;
-	background: #8daac3;
-	border: 1px solid #707070;
+  height: 40px;
+  background: #8daac3;
+  border: 1px solid #707070;
 
-	color: white;
-	font-size: xx-large;
-	font-weight: 400;
-	text-align: center;
+  color: white;
+  font-size: xx-large;
+  font-weight: 400;
+  text-align: center;
 }
 
 img {
-	position: absolute;
-	/* largura-da-tela - input - imagem */
-	right: calc((100vw - 38% - 150px - 480px) / 2);
+  --img-h: 360px;
+  --img-w: 480px;
 
-	background: white;
-	top: calc(-52.5vh + 180px);
+  height: var(--img-h);
+  width: var(--img-w);
+  background: white;
 
-	height: 360px;
-	width: 480px;
+  position: absolute;
+  /* largura-da-tela - input - imagem */
+  right: calc((100vw - 38% - 150px - var(--img-w)) / 2);
+  bottom: calc((100vh - var(--img-h)) / 2);
 }
