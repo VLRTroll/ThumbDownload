@@ -1,5 +1,6 @@
 @import "css-reset.css";
 @import "animations.css";
+@import "responsive.css";
 
 body {
   /* Remove o scroll da animação da tela */
@@ -27,7 +28,7 @@ body {
 #content {
   position: relative;
 
-  height: 55vh;
+  height: calc(100vh - var(--form-margin-top));
   width: 100vw;
 }
 
@@ -35,7 +36,7 @@ form {
   position: relative;
   display: flex;
   align-items: center;
-  margin-top: 45vh;
+  margin-top: var(--form-margin-top);
 }
 
 form input {
@@ -141,15 +142,12 @@ form button {
 }
 
 img {
-  --img-h: 360px;
-  --img-w: 480px;
-
-  height: var(--img-h);
-  width: var(--img-w);
+  height: var(--img-height);
+  width: var(--img-width);
   background: white;
 
   position: absolute;
   /* largura-da-tela - input - imagem */
-  right: calc((100vw - 38% - 150px - var(--img-w)) / 2);
-  bottom: calc((100vh - var(--img-h)) / 2);
+  right: calc((100vw - 38% - 150px - var(--img-width)) / 2);
+  bottom: calc((100vh - var(--img-height)) / 2);
 }
