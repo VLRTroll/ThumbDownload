@@ -34,7 +34,7 @@ body {
 form {
 	display: flex;
 	align-items: center;
-	margin-top: 50vh;
+	margin-top: 45vh;
 }
 
 form input {
@@ -68,6 +68,73 @@ form button {
 	color: #bfbfbf;
 	font-size: xx-large;
 	font-weight: 300;
-	text-transform: uppercase;
 }
-/* 0,71 */
+
+#download-options {
+	max-width: 536px;
+	width: 536px;
+
+	display: flex;
+	flex-direction: column;
+
+	/* (restante-da-tela - input - opções)/2 */
+	margin-top: calc((55vh - 71px - 172px) / 2);
+
+	margin-left: calc((38% + 165px - 536px) / 2);
+}
+
+#download-options > h1 {
+	margin-bottom: 10px;
+
+	color: white;
+	font-weight: 400;
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+#download-options ol {
+	display: flex;
+}
+
+#download-options ol li {
+	flex: 1;
+}
+
+#download-options ol li h1 {
+	background: #8daac3;
+	border: 1px solid #707070;
+
+	color: white;
+	font-size: large;
+	font-weight: 400;
+	text-align: center;
+	letter-spacing: -1px;
+}
+
+#download-options ol li div {
+	height: 50px;
+	background: #ffffff;
+	border: 1px solid #707070;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#download-options ol li div p {
+	color: #707070;
+	font-size: x-large;
+	font-weight: 300;
+	text-align: center;
+}
+
+#download-options div {
+	height: 40px;
+	background: #8daac3;
+	border: 1px solid #707070;
+
+	color: white;
+	font-size: xx-large;
+	font-weight: 400;
+	text-align: center;
+}

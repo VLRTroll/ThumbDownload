@@ -22,7 +22,8 @@ body {
 	width: 100vw;
 }
 
-ul {
+ul,
+ol {
 	/* remove o marcador de item de lista */
 	list-style: none;
 }
