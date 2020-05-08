@@ -16,11 +16,11 @@ all_options.forEach((option) =>
 const CORS_BASE_URL = 'https://cors-anywhere.herokuapp.com';
 
 const thumbnail_links = [
-	(id) => `http://img.youtube.com/vi/${id}/default.jpg`,
-	(id) => `http://img.youtube.com/vi/${id}/sddefault.jpg`,
-	(id) => `http://img.youtube.com/vi/${id}/mqdefault.jpg`,
-	(id) => `http://img.youtube.com/vi/${id}/hqdefault.jpg`,
-	(id) => `http://img.youtube.com/vi/${id}/maxresdefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/default.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
 ];
 
 /* Callbacks do botão */
