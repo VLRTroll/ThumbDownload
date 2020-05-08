@@ -42,6 +42,10 @@ form.addEventListener('submit', (event) => {
 		const imagem = document.querySelector('img');
 		imagem.src = thumbnail_links.slice(-1)[0](video_id);
 		imagem.alt = 'Thumbnail Preview';
+
+		fetch(thumbnail_links[0](video_id)).then((response) =>
+			console.log(response)
+		);
 	} else {
 		console.error('Formato não suportado');
 	}
