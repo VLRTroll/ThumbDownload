@@ -13,6 +13,8 @@ all_options.forEach((option) =>
 );
 
 /* Download de Thumbnails */
+const CORS_BASE_URL = 'https://cors-anywhere.herokuapp.com';
+
 const thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/default.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
@@ -24,9 +26,9 @@ const thumbnail_links = [
 const downloadThumbnail = (video_id) => {
 	const headers = new Headers();
 	headers.append('Access-Control-Allow-Origin', '*');
-	headers.append('Access-Control-Allow-Origin', 'image/jpeg');
+	headers.append('Content-Type', 'image/jpeg');
 
-	fetch(thumbnail_links[0](video_id), { headers }).then((response) =>
+	fetch(CORS_BASE_URL + '/' + thumbnail_links[0](video_id)).then((response) =>
 		console.log(response)
 	);
 };
