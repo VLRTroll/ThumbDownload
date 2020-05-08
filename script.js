@@ -13,8 +13,6 @@ all_options.forEach((option) =>
 );
 
 /* Download de Thumbnails */
-const CORS_BASE_URL = 'https://cors-anywhere.herokuapp.com';
-
 const thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/default.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
@@ -22,6 +20,16 @@ const thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
 ];
+
+const downloadThumbnail = (video_id) => {
+	const headers = new Headers();
+	headers.append('Access-Control-Allow-Origin', '*');
+	headers.append('Access-Control-Allow-Origin', 'image/jpeg');
+
+	fetch(thumbnail_links[0](video_id), { headers }).then((response) =>
+		console.log(response)
+	);
+};
 
 /* Callbacks do botão */
 const form = document.querySelector('form');
@@ -43,9 +51,7 @@ form.addEventListener('submit', (event) => {
 		imagem.src = thumbnail_links.slice(-1)[0](video_id);
 		imagem.alt = 'Thumbnail Preview';
 
-		fetch(thumbnail_links[0](video_id)).then((response) =>
-			console.log(response)
-		);
+		downloadThumbnail(video_id);
 	} else {
 		console.error('Formato não suportado');
 	}
