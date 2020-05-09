@@ -23,21 +23,55 @@ const thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
 ];
 
-const downloadThumbnail = (video_id) => {
+const thumbnail_links = [
+	(id) => `https://img.youtube.com/vi/${id}/default.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
+];
+
+const preview_thumbnail_links = [
+	(id) => `https://img.youtube.com/vi/${id}/1.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/2.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/3.jpg`,
+];
+
+const downloadThumbnail = async (link) => {
 	const headers = new Headers();
 	headers.append('Access-Control-Allow-Origin', '*');
 	headers.append('Content-Type', 'image/jpeg');
 
-	fetch(CORS_BASE_URL + '/' + thumbnail_links[0](video_id)).then((response) =>
-		console.log(response)
-	);
+	const response = await fetch(CORS_BASE_URL + '/' + link);
+	const blob = await response.blob();
+	saveAs(blob, 'thumbnail680x480.jpg');
+};
+
+const downloadThumbnailZip = async (video_id) => {
+	const Zip = new JSZip();
+	const folder = zip.folder('VideoThumbnails');
+	const preview_folder = folder.folder('PreviewThumbnails');
+
+	const thumbnails = await Promise.allSettled(
+		thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
+	).then((responses) => responses.blob());
+	console.log(thumbnails);
+
+	// const preview_thumbnails = await Promise.allSettled(
+	// 	preview_thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
+	// );
+	// Zip.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
+	// folder.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
+	// Zip.generateAsync({ type: 'blob' }).then((content) =>
+	// 	saveAs(content, 'download.zip')
+	// );
 };
 
 /* Callbacks do botão */
 const form = document.querySelector('form');
 const input = form.firstElementChild;
 
-const link_regex = /(youtu\.be\/|youtube\.com\/watch\?v=)([\w\d]+)/;
+const link_regex = /(youtu\.be\/|youtube\.com\/watch\?v=)([&\?]+)/;
 
 form.addEventListener('submit', (event) => {
 	event.preventDefault();
@@ -53,7 +87,8 @@ form.addEventListener('submit', (event) => {
 		imagem.src = thumbnail_links.slice(-1)[0](video_id);
 		imagem.alt = 'Thumbnail Preview';
 
-		downloadThumbnail(video_id);
+		const link = thumbnail_links[0](video_id);
+		downloadThumbnail(link);
 	} else {
 		console.error('Formato não suportado');
 	}
