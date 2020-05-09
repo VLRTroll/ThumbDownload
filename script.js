@@ -29,19 +29,27 @@ const preview_thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/3.jpg`,
 ];
 
-const getThumbnailBlob = async (link) => {
+const getThumbnailContent = async (link) => {
 	const headers = new Headers();
 	headers.append('Access-Control-Allow-Origin', '*');
 	headers.append('Content-Type', 'image/jpeg');
 
 	const response = await fetch(CORS_BASE_URL + '/' + link);
-	return await response.blob();
+	return response;
 };
 
 const downloadThumbnail = async (link) => {
-	const blob = await getThumbnailBlob(link);
-	saveAs(blob, 'thumbnail.jpg');
+	const response = await getThumbnailContent(link);
+
+	if (response.ok) {
+		const blob = await response.blob();
+		saveAs(blob, 'thumbnail.jpg');
+	} else {
+		console.error('Erro ao baixar arquivo!');
+	}
 };
+
+const filterReceivedThumbnails = (responses) => {};
 
 const downloadThumbnailZip = async (video_id) => {
 	/* Criação do arquivo ZIP */
@@ -51,13 +59,29 @@ const downloadThumbnailZip = async (video_id) => {
 
 	/* Download das imagens */
 	const thumbnails = await Promise.allSettled(
-		thumbnail_links.map((link) => getThumbnailBlob(link(video_id)))
-	).filter((response) => response.status !== 'rejected');
+		thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
+	)
+		.then((responses) =>
+			responses.filter((response) => response.status !== 'rejected')
+		)
+		.then((responses) => responses.map(({ value }) => value))
+		.then((responses) => responses.filter((response) => response.ok))
+		.then((responses) =>
+			responses.map(async (response) => await response.blob())
+		);
 
 	const preview_thumbnails = await Promise.allSettled(
-		preview_thumbnail_links.map((link) => getThumbnailBlob(link(video_id)))
-	);
-	preview_thumbnails.push(thumbnails.shift());
+		preview_thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
+	)
+		.then((responses) =>
+			responses.filter((response) => response.status !== 'rejected')
+		)
+		.then((responses) => responses.map(({ value }) => value))
+		.then((responses) => responses.filter((response) => response.ok))
+		.then((responses) =>
+			responses.map(async (response) => await response.blob())
+		);
+	preview_thumbnails.unshift(thumbnails.shift());
 
 	/* Inserção das imagens no ZIP */
 	thumbnails.forEach((thumbnail, index) =>
