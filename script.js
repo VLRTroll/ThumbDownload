@@ -54,6 +54,8 @@ const downloadThumbnailZip = async (video_id) => {
 		preview_thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
 	).then((responses) => responses.blob());
 
+	console.log(preview_thumbnails);
+
 	// Zip.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
 	// folder.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
 	// Zip.generateAsync({ type: 'blob' }).then((content) =>
@@ -65,7 +67,7 @@ const downloadThumbnailZip = async (video_id) => {
 const form = document.querySelector('form');
 const input = form.firstElementChild;
 
-const link_regex = /(youtu\.be\/|youtube\.com\/watch\?v=)([&\?]+)/;
+const link_regex = /(youtu\.be\/|youtube\.com\/watch\?v=)([^&\?]+)/;
 
 form.addEventListener('submit', (event) => {
 	event.preventDefault();
