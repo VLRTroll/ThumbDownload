@@ -53,6 +53,7 @@ const downloadThumbnailZip = async (video_id) => {
 	const preview_thumbnails = await Promise.allSettled(
 		preview_thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
 	).then((responses) => responses.blob());
+
 	// Zip.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
 	// folder.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
 	// Zip.generateAsync({ type: 'blob' }).then((content) =>
