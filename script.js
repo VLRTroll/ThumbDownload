@@ -23,14 +23,6 @@ const thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
 ];
 
-const thumbnail_links = [
-	(id) => `https://img.youtube.com/vi/${id}/default.jpg`,
-	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
-	(id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
-	(id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
-];
-
 const preview_thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/1.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/2.jpg`,
@@ -58,9 +50,9 @@ const downloadThumbnailZip = async (video_id) => {
 
 	console.log(thumbnails);
 
-	// const preview_thumbnails = await Promise.allSettled(
-	// 	preview_thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
-	// );
+	const preview_thumbnails = await Promise.allSettled(
+		preview_thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
+	).then((responses) => responses.blob());
 	// Zip.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
 	// folder.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
 	// Zip.generateAsync({ type: 'blob' }).then((content) =>
