@@ -29,38 +29,49 @@ const preview_thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/3.jpg`,
 ];
 
-const downloadThumbnail = async (link) => {
+const getThumbnailBlob = async (link) => {
 	const headers = new Headers();
 	headers.append('Access-Control-Allow-Origin', '*');
 	headers.append('Content-Type', 'image/jpeg');
 
 	const response = await fetch(CORS_BASE_URL + '/' + link);
-	const blob = await response.blob();
-	saveAs(blob, 'thumbnail680x480.jpg');
+	return await response.blob();
+};
+
+const downloadThumbnail = async (link) => {
+	const blob = await getThumbnailBlob(link);
+	saveAs(blob, 'thumbnail.jpg');
 };
 
 const downloadThumbnailZip = async (video_id) => {
+	/* Criação do arquivo ZIP */
 	const Zip = new JSZip();
-	const folder = zip.folder('VideoThumbnails');
+	const folder = Zip.folder('Thumbnails');
 	const preview_folder = folder.folder('PreviewThumbnails');
 
+	/* Download das imagens */
 	const thumbnails = await Promise.allSettled(
-		thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
-	).then((responses) => responses.blob());
-
-	console.log(thumbnails);
+		thumbnail_links.map((link) => getThumbnailBlob(link(video_id)))
+	).filter((response) => response.status !== 'rejected');
 
 	const preview_thumbnails = await Promise.allSettled(
-		preview_thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
-	).then((responses) => responses.blob());
+		preview_thumbnail_links.map((link) => getThumbnailBlob(link(video_id)))
+	);
+	preview_thumbnails.push(thumbnails.shift());
 
-	console.log(preview_thumbnails);
+	/* Inserção das imagens no ZIP */
+	thumbnails.forEach((thumbnail, index) =>
+		folder.file(`thumbnail${index}.jpg`, thumbnail)
+	);
 
-	// Zip.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
-	// folder.file('idlist.txt', `PMID:29651880\r\nPMID:29303721`);
-	// Zip.generateAsync({ type: 'blob' }).then((content) =>
-	// 	saveAs(content, 'download.zip')
-	// );
+	preview_thumbnails.forEach((thumbnail, index) =>
+		preview_folder.file(`${index}.jpg`, thumbnail)
+	);
+
+	/* Download do ZIP */
+	Zip.generateAsync({ type: 'blob' }).then((content) =>
+		saveAs(content, 'Thumbnails.zip')
+	);
 };
 
 /* Callbacks do botão */
