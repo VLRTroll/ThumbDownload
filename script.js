@@ -55,6 +55,7 @@ const downloadThumbnailZip = async (video_id) => {
 	const thumbnails = await Promise.allSettled(
 		thumbnail_links.map((link) => downloadThumbnail(link(video_id)))
 	).then((responses) => responses.blob());
+
 	console.log(thumbnails);
 
 	// const preview_thumbnails = await Promise.allSettled(
@@ -87,8 +88,8 @@ form.addEventListener('submit', (event) => {
 		imagem.src = thumbnail_links.slice(-1)[0](video_id);
 		imagem.alt = 'Thumbnail Preview';
 
-		const link = thumbnail_links[0](video_id);
-		downloadThumbnail(link);
+		// const link = thumbnail_links[0](video_id);
+		downloadThumbnailZip(video_id);
 	} else {
 		console.error('Formato não suportado');
 	}
