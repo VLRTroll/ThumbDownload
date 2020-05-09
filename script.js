@@ -49,7 +49,17 @@ const downloadThumbnail = async (link) => {
 	}
 };
 
-const filterReceivedThumbnails = (responses) => {};
+const filterReceivedThumbnails = (resolve_array_promise) => {
+	return resolve_array_promise
+		.then((responses) =>
+			responses.filter((response) => response.status !== 'rejected')
+		)
+		.then((responses) => responses.map(({ value }) => value))
+		.then((responses) => responses.filter((response) => response.ok))
+		.then((responses) =>
+			responses.map(async (response) => await response.blob())
+		);
+};
 
 const downloadThumbnailZip = async (video_id) => {
 	/* Criação do arquivo ZIP */
@@ -58,29 +68,17 @@ const downloadThumbnailZip = async (video_id) => {
 	const preview_folder = folder.folder('PreviewThumbnails');
 
 	/* Download das imagens */
-	const thumbnails = await Promise.allSettled(
-		thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
-	)
-		.then((responses) =>
-			responses.filter((response) => response.status !== 'rejected')
+	const thumbnails = await filterReceivedThumbnails(
+		Promise.allSettled(
+			thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
 		)
-		.then((responses) => responses.map(({ value }) => value))
-		.then((responses) => responses.filter((response) => response.ok))
-		.then((responses) =>
-			responses.map(async (response) => await response.blob())
-		);
+	);
 
-	const preview_thumbnails = await Promise.allSettled(
-		preview_thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
-	)
-		.then((responses) =>
-			responses.filter((response) => response.status !== 'rejected')
+	const preview_thumbnails = await filterReceivedThumbnails(
+		Promise.allSettled(
+			preview_thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
 		)
-		.then((responses) => responses.map(({ value }) => value))
-		.then((responses) => responses.filter((response) => response.ok))
-		.then((responses) =>
-			responses.map(async (response) => await response.blob())
-		);
+	);
 	preview_thumbnails.unshift(thumbnails.shift());
 
 	/* Inserção das imagens no ZIP */
