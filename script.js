@@ -29,6 +29,13 @@ const preview_thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/3.jpg`,
 ];
 
+const thumbnail_names = [
+	'thumbnail@320x180.jpg',
+	'thumbnail@480x360.jpg',
+	'thumbnail@680x480.jpg',
+	'thumbnail@1280x720.jpg',
+];
+
 const getThumbnailContent = async (link) => {
 	const headers = new Headers();
 	headers.append('Access-Control-Allow-Origin', '*');
@@ -83,7 +90,7 @@ const downloadThumbnailZip = async (video_id) => {
 
 	/* Inserção das imagens no ZIP */
 	thumbnails.forEach((thumbnail, index) =>
-		folder.file(`thumbnail${index}.jpg`, thumbnail)
+		folder.file(thumbnail_names[index], thumbnail)
 	);
 
 	preview_thumbnails.forEach((thumbnail, index) =>
