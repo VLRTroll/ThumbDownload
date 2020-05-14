@@ -1,0 +1,174 @@
+body {
+  /* Remove o scroll da animação da tela */
+  overflow: hidden;
+
+  background: #376996;
+}
+
+#backgound {
+  position: relative;
+  display: flex;
+}
+
+.layer {
+  position: absolute;
+  top: -25vh;
+  /* left: 110vw; */
+
+  transform: rotate(22deg);
+
+  height: 200vh;
+  width: 100vw;
+}
+
+#content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+}
+
+#input-area {
+  width: 50vw;
+  min-height: 55vh;
+  margin-top: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+}
+
+form input {
+  flex: 1;
+  background: none;
+
+  border: 1px white solid;
+  border-left: none;
+  padding: 0 15px;
+
+  color: white;
+  font-size: var(--form-font-size);
+  font-weight: 300;
+}
+
+form input::placeholder {
+  color: white;
+  font-size: var(--form-font-size);
+  font-weight: 300;
+}
+
+form button {
+  height: 70px;
+  width: 180px;
+  min-width: 140px;
+  background: white;
+
+  border: none;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+
+  color: #bfbfbf;
+  font-size: var(--form-font-size);
+  font-weight: 300;
+}
+
+#download-options {
+  margin: auto 10%;
+}
+
+#download-options > h1 {
+  color: white;
+  font-size: var(--form-font-size);
+  font-weight: 400;
+  text-align: center;
+}
+
+ol {
+  margin-top: 10px;
+  display: flex;
+}
+
+li {
+  flex: 1;
+  min-width: 90px;
+}
+
+li h1 {
+  background: #8daac3;
+  border: 1px solid #707070;
+
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: -1px;
+}
+
+li div {
+  height: 65px;
+  background: #ffffff;
+  border: 1px solid #707070;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+li div p {
+  color: #707070;
+  font-size: 26px;
+  font-weight: 300;
+  text-align: center;
+}
+
+#zip-option {
+  background: #8daac3;
+  padding: 5px;
+  border: 1px solid #707070;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#zip-option p {
+  color: white;
+  font-size: 30px;
+  font-weight: 300;
+  text-align: center;
+}
+
+#image-area {
+  margin: auto 5%;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#image-area img {
+  height: var(--img-height);
+  width: var(--img-width);
+  background: white;
+}
+
+div > button {
+  min-height: 50px;
+  width: 50%;
+
+  background: white;
+  margin-top: 30px;
+
+  border: none;
+  border-radius: 25px;
+
+  color: #bfbfbf;
+  font-size: var(--form-font-size);
+  font-weight: 300;
+}
