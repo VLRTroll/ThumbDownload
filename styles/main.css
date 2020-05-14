@@ -152,7 +152,7 @@ li div p {
   justify-content: center;
 }
 
-#image-area img {
+img {
   height: var(--img-height);
   width: var(--img-width);
   background: white;
