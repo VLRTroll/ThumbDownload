@@ -10,7 +10,7 @@ const zipOption = document.getElementById('zip-option');
 const allOptions = resolutionOptions.concat(zipOption);
 
 /* Setting Constants */
-const defaultWidth = image.width;
+const defaultImageSize = { width: image.width, heigth: image.height };
 let videoId = null;
 let imageBlobs = [];
 
@@ -29,6 +29,9 @@ const thumbnailLinks = [
 
 /* Preview Section */
 const putLoadingBackground = () => {
+	image.style.width = `${defaultImageSize.width}px`;
+	image.style.height = `${defaultImageSize.heigth}px`;
+
 	const loadingGifURL =
 		'https://github.com/VLRTroll/Youtube-Thumbnail-Downloader/blob/master/assets/loading.gif';
 	image.style.setProperty('background', `url(${loadingGifURL}) center`);
@@ -95,14 +98,14 @@ const updateThumbnailImage = (imageIndex) => {
 	const thumbnailsWidthEnum = [120, 320, 480, 680, 1280];
 	const thumbnailsHeightEnum = [90, 180, 360, 480, 720];
 
-	if (thumbnailsWidthEnum[imageIndex] > defaultWidth) {
+	if (thumbnailsWidthEnum[imageIndex] > defaultImageSize.width) {
 		const scale = image.width / thumbnailsWidthEnum[imageIndex];
 
-		image.width = defaultWidth;
-		image.height = thumbnailsHeightEnum[imageIndex] * scale;
+		image.style.width = `${defaultImageSize.width}px`;
+		image.style.height = `${thumbnailsHeightEnum[imageIndex] * scale}px`;
 	} else {
-		image.width = thumbnailsWidthEnum[imageIndex];
-		image.height = thumbnailsHeightEnum[imageIndex];
+		image.style.width = `${thumbnailsWidthEnum[imageIndex]}px`;
+		image.style.height = `${thumbnailsHeightEnum[imageIndex]}px`;
 	}
 
 	image.src = thumbnailLinks[imageIndex](videoId);
