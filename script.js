@@ -49,11 +49,15 @@ const downloadThumbnails = async () => {
 
 	const getThumbnail = (url) => fetch(CORS_BASE_URL + '/' + url, headers);
 
+	const responses = await Promise.allSettled(
+		thumbnailLinks.map((link) => getThumbnail(link(videoId)))
+	);
+
 	imageBlobs = (
 		await Promise.allSettled(
-			thumbnailLinks.map((link) => getThumbnail(link(videoId)))
+			responses.map((response) => response.value?.blob())
 		)
-	).map(async (response) => await response.value?.blob());
+	).map(({ value }) => value);
 };
 
 const resetOptionStatus = () => {
@@ -61,7 +65,7 @@ const resetOptionStatus = () => {
 		resolutionOptions[index].classList.remove('active');
 		resolutionOptions[index].classList.remove('disable');
 
-		if (blob) {
+		if (!blob) {
 			resolutionOptions[index].classList.add('disable');
 		}
 	});
@@ -82,13 +86,17 @@ form.addEventListener('submit', (event) => {
 	if (url.length === 0) return;
 
 	if (urlRegexValidator.test(url)) {
-		putLoadingBackground();
+		const newVideoId = url.match(urlRegexValidator).pop();
 
-		videoId = url.match(urlRegexValidator).pop();
-		downloadThumbnails();
-		resetOptionStatus();
+		if (newVideoId !== videoId) {
+			putLoadingBackground();
 
-		putThumbnailImage(image.width);
+			videoId = newVideoId;
+			downloadThumbnails();
+			resetOptionStatus();
+
+			putThumbnailImage(image.width);
+		}
 	} else {
 		// TODO: Substituir log por um span no HTML
 		console.error('Unsupported URL format');
@@ -146,7 +154,7 @@ const downloadThumbnail = async (index) => {
 const downloadThumbnailZip = async () => {
 	/* Criação do arquivo ZIP */
 	const Zip = new JSZip();
-	const folder = Zip.folder('Thumbnails');
+	const folder = Zip.folder(`Thumbnails_${videoId}`);
 	const previewFolder = folder.folder('PreviewThumbnails');
 
 	/* Thumbnail grouping */
@@ -155,13 +163,13 @@ const downloadThumbnailZip = async () => {
 
 	/* Inserção das imagens no ZIP */
 	thumbnails.forEach((thumbnail, index) => {
-		if (thumbnail.value) {
+		if (thumbnail) {
 			folder.file(getFilename(index + 1), thumbnail);
 		}
 	});
 
 	previewThumbnails.forEach((thumbnail, index) => {
-		if (thumbnail.value) {
+		if (thumbnail) {
 			previewFolder.file(`${index}.jpg`, thumbnail);
 		}
 	});
@@ -177,7 +185,7 @@ downloadButton.addEventListener('click', () => {
 		option.classList.contains('active')
 	);
 
-	if (videoId) {
+	if (videoId && activeOptionIndex) {
 		if (activeOptionIndex === allOptions.length - 1) {
 			downloadThumbnailZip();
 		} else {
