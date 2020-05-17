@@ -31,7 +31,7 @@ const thumbnailLinks = [
 const putLoadingBackground = () => {
 	const loadingGifURL =
 		'https://github.com/VLRTroll/Youtube-Thumbnail-Downloader/blob/master/assets/loading.gif';
-	image.style.setProperty(`background', 'url(${loadingGifURL}) center`);
+	image.style.setProperty('background', `url(${loadingGifURL}) center`);
 	image.style.setProperty('background-color', 'white');
 	image.style.setProperty('background-size', '300px');
 	image.style.setProperty('background-repeat', 'no-repeat');
