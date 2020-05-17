@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="style.css" />
-    <title>Youtube Thumbnail Downloader</title>
-  </head>
+		<link rel="stylesheet" href="style.css" />
+		<title>Youtube Thumbnail Downloader</title>
+	</head>
 
-  <body>
-    <div id="backgound">
-      <div class="layer one"></div>
-      <div class="layer two"></div>
-      <div class="layer three"></div>
-    </div>
+	<body>
+		<div id="backgound">
+			<div class="layer one"></div>
+			<div class="layer two"></div>
+			<div class="layer three"></div>
+		</div>
 
-    <div id="content">
-      <div id="input-area">
-        <form>
-          <input placeholder="INSERT VIDEO URL HERE" />
-          <button>PREVIEW</button>
-        </form>
+		<div id="content">
+			<div id="input-area">
+				<form>
+					<input placeholder="INSERT VIDEO URL HERE" />
+					<button>PREVIEW</button>
+				</form>
 
-        <div id="download-options">
-          <h1>IMAGE RESOLUTION</h1>
+				<div id="download-options">
+					<h1>IMAGE RESOLUTION</h1>
 
-          <ol id="resolucoes">
-            <li>
-              <h1>SUPER LOW</h1>
-              <div><p>120 X 90</p></div>
-            </li>
-            <li>
-              <h1>LOW</h1>
-              <div><p>320 X 180</p></div>
-            </li>
-            <li>
-              <h1>MEDIUM</h1>
-              <div><p>480 X 360</p></div>
-            </li>
-            <li>
-              <h1>HIGH</h1>
-              <div><p>680 X 480</p></div>
-            </li>
-            <li>
-              <h1>HD</h1>
-              <div><p>1280 X 720</p></div>
-            </li>
-          </ol>
+					<ol id="resolucoes">
+						<li>
+							<h1>SUPER LOW</h1>
+							<div><p>120 X 90</p></div>
+						</li>
+						<li>
+							<h1>LOW</h1>
+							<div><p>320 X 180</p></div>
+						</li>
+						<li>
+							<h1>MEDIUM</h1>
+							<div><p>480 X 360</p></div>
+						</li>
+						<li>
+							<h1>HIGH</h1>
+							<div><p>680 X 480</p></div>
+						</li>
+						<li>
+							<h1>HD</h1>
+							<div><p>1280 X 720</p></div>
+						</li>
+					</ol>
 
-          <div id="zip-option"><p>ALL</p></div>
-        </div>
-      </div>
+					<div id="zip-option"><p>ALL</p></div>
+				</div>
+			</div>
 
-      <div id="image-area">
-        <img />
-        <button id="download-button">DOWNLOAD</button>
-      </div>
-    </div>
-  </body>
+			<div id="image-area">
+				<img />
+				<button id="download-button">DOWNLOAD</button>
+			</div>
+		</div>
+	</body>
 
-  <script src="utils/FileSaver.js"></script>
-  <script src="utils/jszip.min.js"></script>
-  <!-- <script src="script.js"></script> -->
+	<script src="utils/FileSaver.js"></script>
+	<script src="utils/jszip.min.js"></script>
+	<script src="script.js"></script>
 </html>

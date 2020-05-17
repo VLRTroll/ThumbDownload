@@ -1,101 +1,153 @@
-/* Seleção de opções */
-const resolution_options = Array.from(document.querySelector('ol').children);
-const zip_option = document.getElementById('zip-option');
-const all_options = resolution_options.concat(zip_option);
+/* DOM Elements Capturing */
+const form = document.querySelector('form');
+const formInput = document.querySelector('form input');
 
-const selectOption = (option) => {
-	all_options.forEach((element) => element.classList.remove('active'));
-	option.classList.add('active');
-};
+const image = document.querySelector('img');
+const downloadButton = document.getElementById('download-button');
 
-all_options.forEach((option) =>
-	option.addEventListener('click', () => selectOption(option))
-);
+const resolutionOptions = Array.from(document.querySelector('ol').children);
+const zipOption = document.getElementById('zip-option');
+const allOptions = resolutionOptions.concat(zipOption);
 
-/* Download de Thumbnails */
-const CORS_BASE_URL = 'https://cors-anywhere.herokuapp.com';
+/* Setting Constants */
+const defaultWidth = image.width;
+let videoId = null;
+let imageBlobs = [];
 
-const thumbnail_links = [
+const urlRegexValidator = /(youtu\.be\/|youtube\.com\/watch\?v=)([^&\?]{11})/;
+
+const thumbnailLinks = [
 	(id) => `https://img.youtube.com/vi/${id}/default.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
-];
-
-const preview_thumbnail_links = [
 	(id) => `https://img.youtube.com/vi/${id}/1.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/2.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/3.jpg`,
 ];
 
-const thumbnail_names = [
-	'thumbnail@320x180.jpg',
-	'thumbnail@480x360.jpg',
-	'thumbnail@680x480.jpg',
-	'thumbnail@1280x720.jpg',
-];
-
-const getThumbnailContent = async (link) => {
-	const headers = new Headers();
-	headers.append('Access-Control-Allow-Origin', '*');
-	headers.append('Content-Type', 'image/jpeg');
-
-	const response = await fetch(CORS_BASE_URL + '/' + link);
-	return response;
+/* Preview Section */
+const putLoadingBackground = () => {
+	image.style.setProperty('background', 'url(/assets/loading.gif) center');
+	image.style.setProperty('background-color', 'white');
+	image.style.setProperty('background-size', '300px');
+	image.style.setProperty('background-repeat', 'no-repeat');
 };
 
-const downloadThumbnail = async (link) => {
-	const response = await getThumbnailContent(link);
+const downloadThumbnails = () => {
+	const CORS_BASE_URL = 'https://cors-anywhere.herokuapp.com';
+	const getThumbnail = (url) => fetch(CORS_BASE_URL + '/' + url);
 
-	if (response.ok) {
-		const blob = await response.blob();
-		saveAs(blob, 'thumbnail.jpg');
+	imageBlobs = Promise.allSettled(
+		thumbnailLinks.map((link) => getThumbnail(link(videoId)))
+	);
+
+	imageBlobs.forEach((blob, index) => {
+		if (blob.status === 'reject') {
+			resolutionOptions[index].classList.remove('active');
+			resolutionOptions[index].classList.add('disable');
+		} else {
+			resolutionOptions[index].classList.remove('disable');
+			resolutionOptions[index].classList.add('active');
+		}
+	});
+};
+
+const putThumbnailImage = (imageSize) => {
+	const thumbnailsWidthEnum = [120, 320, 480, 680, 1280];
+	const index = thumbnailsWidthEnum.indexOf(imageSize);
+
+	image.src = thumbnailLinks[index](videoId);
+	image.alt = 'Thumbnail Preview';
+};
+
+form.addEventListener('submit', () => {
+	const url = formInput.value;
+
+	if (url.length === 0 && urlRegexValidator.test(url)) {
+		putLoadingBackground();
+
+		videoId = url.match(urlRegexValidator).pop();
+		downloadThumbnails();
+
+		putThumbnailImage(image.width);
 	} else {
-		console.error('Erro ao baixar arquivo!');
+		// TODO: Substituir log por um span no HTML
+		console.error('Unsupported URL format');
+	}
+});
+
+/* Option Section */
+const updateThumbnailImage = (imageIndex) => {
+	const thumbnailsWidthEnum = [120, 320, 480, 680, 1280];
+	const thumbnailsHeightEnum = [90, 180, 360, 480, 720];
+
+	if (thumbnailsWidthEnum[imageIndex] > defaultWidth) {
+		const scale = image.width / thumbnailsWidthEnum[imageIndex];
+
+		image.width = defaultWidth;
+		image.height = thumbnailsHeightEnum[index] * scale;
+	} else {
+		image.width = thumbnailsWidthEnum[imageIndex];
+		image.height = thumbnailsHeightEnum[index];
+	}
+
+	image.src = thumbnailLinks[index](videoId);
+	image.alt = 'Thumbnail Preview';
+};
+
+const selectOption = (option, index) => {
+	allOptions.forEach((element) => element.classList.remove('active'));
+	option.classList.add('active');
+
+	updateThumbnailImage(index);
+};
+
+allOptions.forEach((option, index) =>
+	option.addEventListener('click', () => selectOption(option, index))
+);
+
+/* Download Section */
+const getFilename = (index) => {
+	const resolution = resolutionOptions[index].lastElementChild.textContent;
+	const filename = `thumbnail_${resolution.replace(' ', '')}.jpg`;
+	return filename;
+};
+
+const downloadThumbnail = async (index) => {
+	const response = imageBlobs[index].value;
+
+	try {
+		const blob = await response.blob();
+		saveAs(blob, getFilename(index));
+	} catch (error) {
+		alert('Fail during download thumbnail process.');
 	}
 };
 
-const filterReceivedThumbnails = (resolve_array_promise) => {
-	return resolve_array_promise
-		.then((responses) =>
-			responses.filter((response) => response.status !== 'rejected')
-		)
-		.then((responses) => responses.map(({ value }) => value))
-		.then((responses) => responses.filter((response) => response.ok))
-		.then((responses) =>
-			responses.map(async (response) => await response.blob())
-		);
-};
-
-const downloadThumbnailZip = async (video_id) => {
+const downloadThumbnailZip = async () => {
 	/* Criação do arquivo ZIP */
 	const Zip = new JSZip();
 	const folder = Zip.folder('Thumbnails');
-	const preview_folder = folder.folder('PreviewThumbnails');
+	const previewFolder = folder.folder('PreviewThumbnails');
 
-	/* Download das imagens */
-	const thumbnails = await filterReceivedThumbnails(
-		Promise.allSettled(
-			thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
-		)
-	);
-
-	const preview_thumbnails = await filterReceivedThumbnails(
-		Promise.allSettled(
-			preview_thumbnail_links.map((link) => getThumbnailContent(link(video_id)))
-		)
-	);
-	preview_thumbnails.unshift(thumbnails.shift());
+	/* Thumbnail grouping */
+	const previewThumbnails = Array.from(imageBlobs);
+	const thumbnails = previewThumbnails.splice(1, 4);
 
 	/* Inserção das imagens no ZIP */
-	thumbnails.forEach((thumbnail, index) =>
-		folder.file(thumbnail_names[index], thumbnail)
-	);
+	thumbnails.forEach((thumbnail, index) => {
+		if (thumbnail.value) {
+			folder.file(getFilename(index + 1), thumbnail.value);
+		}
+	});
 
-	preview_thumbnails.forEach((thumbnail, index) =>
-		preview_folder.file(`${index}.jpg`, thumbnail)
-	);
+	previewThumbnails.forEach((thumbnail, index) => {
+		if (thumbnail.value) {
+			previewFolder.file(`${index}.jpg`, thumbnail.value);
+		}
+	});
 
 	/* Download do ZIP */
 	Zip.generateAsync({ type: 'blob' }).then((content) =>
@@ -103,29 +155,14 @@ const downloadThumbnailZip = async (video_id) => {
 	);
 };
 
-/* Callbacks do botão */
-const form = document.querySelector('form');
-const input = form.firstElementChild;
+downloadButton.addEventListener('click', () => {
+	const activeOptionIndex = allOptions.findIndex((option) =>
+		option.classList.contains('active')
+	);
 
-const link_regex = /(youtu\.be\/|youtube\.com\/watch\?v=)([^&\?]+)/;
-
-form.addEventListener('submit', (event) => {
-	event.preventDefault();
-	const link = input.value;
-	if (link.length === 0) return; //texto nulo
-
-	if (link_regex.test(link)) {
-		const link_fragments = link.match(link_regex);
-		const video_id = link_fragments[link_fragments.length - 1];
-
-		/* Preenche imagem no HTML */
-		const imagem = document.querySelector('img');
-		imagem.src = thumbnail_links.slice(-1)[0](video_id);
-		imagem.alt = 'Thumbnail Preview';
-
-		// const link = thumbnail_links[0](video_id);
-		downloadThumbnailZip(video_id);
+	if (activeOptionIndex === allOptions.length - 1) {
+		downloadThumbnailZip();
 	} else {
-		console.error('Formato não suportado');
+		downloadThumbnail(index);
 	}
 });
