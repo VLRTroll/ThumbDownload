@@ -39,25 +39,31 @@ const putLoadingBackground = () => {
 
 const downloadThumbnails = async () => {
 	const CORS_BASE_URL = 'https://cors-anywhere.herokuapp.com';
-	const getThumbnail = (url) => fetch(CORS_BASE_URL + '/' + url);
+
+	const headers = new Headers();
+	headers.append('Access-Control-Allow-Origin', '*');
+	headers.append('Content-Type', 'image/jpeg');
+
+	const getThumbnail = (url) => fetch(CORS_BASE_URL + '/' + url, headers);
 
 	imageBlobs = await Promise.allSettled(
 		thumbnailLinks.map((link) => getThumbnail(link(videoId)))
 	);
+};
 
-	imageBlobs.forEach((blob, index) => {
+const resetOptionStatus = () => {
+	imageBlobs.slice(0, 5).forEach((blob, index) => {
+		resolutionOptions[index].classList.remove('active');
+		resolutionOptions[index].classList.remove('disable');
+
 		if (blob.status === 'reject') {
-			resolutionOptions[index].classList.remove('active');
 			resolutionOptions[index].classList.add('disable');
-		} else {
-			resolutionOptions[index].classList.remove('active');
-			resolutionOptions[index].classList.remove('disable');
 		}
 	});
 };
 
 const putThumbnailImage = (imageSize) => {
-	const thumbnailsWidthEnum = [120, 320, 480, 680, 1280];
+	const thumbnailsWidthEnum = [120, 320, 480, 640, 1280];
 	const index = thumbnailsWidthEnum.indexOf(imageSize);
 
 	image.src = thumbnailLinks[index](videoId);
@@ -75,6 +81,7 @@ form.addEventListener('submit', (event) => {
 
 		videoId = url.match(urlRegexValidator).pop();
 		downloadThumbnails();
+		resetOptionStatus();
 
 		putThumbnailImage(image.width);
 	} else {
