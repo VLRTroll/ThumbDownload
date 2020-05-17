@@ -35,11 +35,11 @@ const putLoadingBackground = () => {
 	image.style.setProperty('background-repeat', 'no-repeat');
 };
 
-const downloadThumbnails = () => {
+const downloadThumbnails = async () => {
 	const CORS_BASE_URL = 'https://cors-anywhere.herokuapp.com';
 	const getThumbnail = (url) => fetch(CORS_BASE_URL + '/' + url);
 
-	imageBlobs = Promise.allSettled(
+	imageBlobs = await Promise.allSettled(
 		thumbnailLinks.map((link) => getThumbnail(link(videoId)))
 	);
 
