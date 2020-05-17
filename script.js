@@ -18,9 +18,9 @@ const urlRegexValidator = /(youtu\.be\/|youtube\.com\/watch\?v=)([^&\?]{11})/;
 
 const thumbnailLinks = [
 	(id) => `https://img.youtube.com/vi/${id}/default.jpg`,
-	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+	(id) => `https://img.youtube.com/vi/${id}/sddefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/1.jpg`,
 	(id) => `https://img.youtube.com/vi/${id}/2.jpg`,
@@ -29,7 +29,9 @@ const thumbnailLinks = [
 
 /* Preview Section */
 const putLoadingBackground = () => {
-	image.style.setProperty('background', 'url(/assets/loading.gif) center');
+	const loadingGifURL =
+		'https://github.com/VLRTroll/Youtube-Thumbnail-Downloader/blob/master/assets/loading.gif';
+	image.style.setProperty(`background', 'url(${loadingGifURL}) center`);
 	image.style.setProperty('background-color', 'white');
 	image.style.setProperty('background-size', '300px');
 	image.style.setProperty('background-repeat', 'no-repeat');
@@ -48,8 +50,8 @@ const downloadThumbnails = async () => {
 			resolutionOptions[index].classList.remove('active');
 			resolutionOptions[index].classList.add('disable');
 		} else {
+			resolutionOptions[index].classList.remove('active');
 			resolutionOptions[index].classList.remove('disable');
-			resolutionOptions[index].classList.add('active');
 		}
 	});
 };
