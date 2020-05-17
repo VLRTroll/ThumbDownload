@@ -128,7 +128,7 @@ allOptions.forEach((option, index) =>
 /* Download Section */
 const getFilename = (index) => {
 	const resolution = resolutionOptions[index].lastElementChild.textContent;
-	const filename = `thumbnail_${resolution.replace(' ', '')}.jpg`;
+	const filename = `thumbnail_${resolution.replace(/\s/g, '')}.jpg`;
 	return filename;
 };
 
