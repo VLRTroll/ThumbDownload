@@ -117,7 +117,7 @@ const selectOption = (option, index) => {
 
 	if (videoId) {
 		option.classList.add('active');
-		updateThumbnailImage(index);
+		if (option !== zipOption) updateThumbnailImage(index);
 	}
 };
 
@@ -156,13 +156,13 @@ const downloadThumbnailZip = async () => {
 	/* Inserção das imagens no ZIP */
 	thumbnails.forEach((thumbnail, index) => {
 		if (thumbnail.value) {
-			folder.file(getFilename(index + 1), thumbnail.value);
+			folder.file(getFilename(index + 1), await thumbnail.value.blob());
 		}
 	});
 
 	previewThumbnails.forEach((thumbnail, index) => {
 		if (thumbnail.value) {
-			previewFolder.file(`${index}.jpg`, thumbnail.value);
+			previewFolder.file(`${index}.jpg`, await thumbnail.value.blob());
 		}
 	});
 
@@ -181,7 +181,7 @@ downloadButton.addEventListener('click', () => {
 		if (activeOptionIndex === allOptions.length - 1) {
 			downloadThumbnailZip();
 		} else {
-			downloadThumbnail(index);
+			downloadThumbnail(activeOptionIndex);
 		}
 	}
 });
