@@ -49,9 +49,11 @@ const downloadThumbnails = async () => {
 
 	const getThumbnail = (url) => fetch(CORS_BASE_URL + '/' + url, headers);
 
-	imageBlobs = await Promise.allSettled(
-		thumbnailLinks.map((link) => getThumbnail(link(videoId)))
-	);
+	imageBlobs = (
+		await Promise.allSettled(
+			thumbnailLinks.map((link) => getThumbnail(link(videoId)))
+		)
+	).map(async (response) => await response.value?.blob());
 };
 
 const resetOptionStatus = () => {
@@ -59,7 +61,7 @@ const resetOptionStatus = () => {
 		resolutionOptions[index].classList.remove('active');
 		resolutionOptions[index].classList.remove('disable');
 
-		if (blob.status === 'reject') {
+		if (blob) {
 			resolutionOptions[index].classList.add('disable');
 		}
 	});
@@ -133,10 +135,8 @@ const getFilename = (index) => {
 };
 
 const downloadThumbnail = async (index) => {
-	const response = imageBlobs[index].value;
-
 	try {
-		const blob = await response.blob();
+		const blob = imageBlobs[index];
 		saveAs(blob, getFilename(index));
 	} catch (error) {
 		alert('Fail during download thumbnail process.');
@@ -156,13 +156,13 @@ const downloadThumbnailZip = async () => {
 	/* Inserção das imagens no ZIP */
 	thumbnails.forEach((thumbnail, index) => {
 		if (thumbnail.value) {
-			folder.file(getFilename(index + 1), await thumbnail.value.blob());
+			folder.file(getFilename(index + 1), thumbnail);
 		}
 	});
 
 	previewThumbnails.forEach((thumbnail, index) => {
 		if (thumbnail.value) {
-			previewFolder.file(`${index}.jpg`, await thumbnail.value.blob());
+			previewFolder.file(`${index}.jpg`, thumbnail);
 		}
 	});
 
