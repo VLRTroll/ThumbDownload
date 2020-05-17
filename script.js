@@ -62,10 +62,13 @@ const putThumbnailImage = (imageSize) => {
 	image.alt = 'Thumbnail Preview';
 };
 
-form.addEventListener('submit', () => {
-	const url = formInput.value;
+form.addEventListener('submit', (event) => {
+	event.preventDefault();
 
-	if (url.length === 0 && urlRegexValidator.test(url)) {
+	const url = formInput.value;
+	if (url.length === 0) return;
+
+	if (urlRegexValidator.test(url)) {
 		putLoadingBackground();
 
 		videoId = url.match(urlRegexValidator).pop();
