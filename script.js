@@ -99,21 +99,23 @@ const updateThumbnailImage = (imageIndex) => {
 		const scale = image.width / thumbnailsWidthEnum[imageIndex];
 
 		image.width = defaultWidth;
-		image.height = thumbnailsHeightEnum[index] * scale;
+		image.height = thumbnailsHeightEnum[imageIndex] * scale;
 	} else {
 		image.width = thumbnailsWidthEnum[imageIndex];
-		image.height = thumbnailsHeightEnum[index];
+		image.height = thumbnailsHeightEnum[imageIndex];
 	}
 
-	image.src = thumbnailLinks[index](videoId);
+	image.src = thumbnailLinks[imageIndex](videoId);
 	image.alt = 'Thumbnail Preview';
 };
 
 const selectOption = (option, index) => {
 	allOptions.forEach((element) => element.classList.remove('active'));
-	option.classList.add('active');
 
-	updateThumbnailImage(index);
+	if (videoId) {
+		option.classList.add('active');
+		updateThumbnailImage(index);
+	}
 };
 
 allOptions.forEach((option, index) =>
@@ -172,9 +174,11 @@ downloadButton.addEventListener('click', () => {
 		option.classList.contains('active')
 	);
 
-	if (activeOptionIndex === allOptions.length - 1) {
-		downloadThumbnailZip();
-	} else {
-		downloadThumbnail(index);
+	if (videoId) {
+		if (activeOptionIndex === allOptions.length - 1) {
+			downloadThumbnailZip();
+		} else {
+			downloadThumbnail(index);
+		}
 	}
 });
