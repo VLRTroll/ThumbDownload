@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+		<link rel="shortcut icon" href="./assets/favicon.svg" />
 		<link rel="stylesheet" href="style.css" />
 		<title>Youtube Thumbnail Downloader</title>
 	</head>
@@ -16,44 +16,45 @@
 		</div>
 
 		<div id="content">
-			<div id="input-area">
-				<form>
-					<input placeholder="INSERT VIDEO URL HERE" />
-					<button>PREVIEW</button>
-				</form>
+			<img id="logo" src="./assets/logo.png" alt="Thumbsdown Logo" />
 
-				<div id="download-options">
-					<h1>IMAGE RESOLUTION</h1>
+			<form>
+				<input placeholder="INSERT VIDEO URL HERE" />
+				<button>PREVIEW</button>
+			</form>
 
-					<ol id="resolucoes">
-						<li>
-							<h1>SUPER LOW</h1>
-							<div><p>120 X 90</p></div>
-						</li>
-						<li>
-							<h1>LOW</h1>
-							<div><p>320 X 180</p></div>
-						</li>
-						<li>
-							<h1>MEDIUM</h1>
-							<div><p>480 X 360</p></div>
-						</li>
-						<li>
-							<h1>HIGH</h1>
-							<div><p>640 X 480</p></div>
-						</li>
-						<li>
-							<h1>HD</h1>
-							<div><p>1280 X 720</p></div>
-						</li>
-					</ol>
+			<div id="download-options">
+				<h1>IMAGE RESOLUTION</h1>
 
-					<div id="zip-option"><p>ALL</p></div>
-				</div>
+				<ol id="resolucoes">
+					<li>
+						<h1>SUPER LOW</h1>
+						<div><p>120 X 90</p></div>
+					</li>
+					<li>
+						<h1>LOW</h1>
+						<div><p>320 X 180</p></div>
+					</li>
+					<li>
+						<h1>MEDIUM</h1>
+						<div><p>480 X 360</p></div>
+					</li>
+					<li>
+						<h1>HIGH</h1>
+						<div><p>640 X 480</p></div>
+					</li>
+					<li>
+						<h1>HD</h1>
+						<div><p>1280 X 720</p></div>
+					</li>
+				</ol>
+
+				<div id="zip-option"><p>ALL</p></div>
 			</div>
 
 			<div id="image-area">
-				<img />
+				<img id="thumbnail" />
+
 				<button id="download-button">DOWNLOAD</button>
 			</div>
 		</div>

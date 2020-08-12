@@ -1,137 +1,95 @@
-/* Notebooks and tablets screens */
-@media screen and (orientation: landscape) and (max-width: 1920px) and (max-height: 1080px) {
+/* Mobile screens */
+@media screen and (orientation: portrait) and (min-width: 340px) {
 	* {
-		--img-width: 640px;
-		--img-height: 480px;
+		--img-width: 320px;
+		--img-height: 180px;
 	}
 }
-@media screen and (orientation: landscape) and (max-width: 1400px) and (max-height: 750px) {
+
+@media screen and (orientation: portrait) and (min-width: 500px) {
 	* {
 		--img-width: 480px;
 		--img-height: 360px;
 	}
 }
 
-/* Mobile screens */
-@media screen and (orientation: portrait) {
+@media screen and (orientation: portrait) and (min-width: 660px) {
 	* {
-		--form-font-size: 74px;
+		--img-width: 640px;
+		--img-height: 480px;
 	}
+}
 
-	body {
-		padding-bottom: 30%;
+@media screen and (orientation: portrait) and (min-width: 1300px) {
+	* {
+		--img-width: 1280px;
+		--img-height: 720px;
 	}
+}
 
-	#image-area button,
-	form button {
-		color: #707070;
-		font-weight: 400;
+/* Notebooks and tablets screens */
+@media screen and (orientation: landscape) {
+	* {
+		--font-color: #bfbfbf;
+		--font-weight: 300;
+		--letter-spacing: -1px;
 	}
 
 	#content {
-		flex-direction: column;
+		padding: 5% 0;
+
+		display: grid;
+		grid-auto-columns: 1fr 1fr;
+		grid-template-rows: 2fr 1fr 1fr 1fr;
+		grid-template-areas:
+			'logo download'
+			'form download'
+			'options download'
+			'options download';
 	}
 
-	#input-area {
-		width: 100%;
-
-		justify-content: space-around;
+	form {
+		margin: 0;
 	}
 
-	form input {
-		font-weight: 400;
-		border-width: 3px;
-	}
-
-	form button {
-		height: 120px;
-		width: 296px;
-		margin-right: 5vw;
-
-		border-top-right-radius: 60px;
-		border-bottom-right-radius: 60px;
-	}
-
-	#download-options {
-		margin: 0 5%;
-	}
-
-	#download-options > h1 {
-		font-size: 100px;
-	}
-
-	ol {
-		margin-top: 1vh;
-	}
-
+	#zip-option p,
 	li h1 {
-		font-size: 60px;
+		color: white;
 	}
 
-	li div {
-		min-height: 150px;
+	#thumbnail {
+		margin: auto 0;
 	}
 
-	li div p {
-		font-size: 75px;
-	}
-
-	#zip-option p {
-		font-size: 75px;
+	#download-button {
+		margin: 25px 0;
 	}
 }
 
-@media screen and (orientation: portrait) and (max-width: 1125px) and (max-height: 2436px) {
+@media screen and (orientation: landscape) and (min-width: 680px) {
+	* {
+		--img-width: 320px;
+		--img-height: 180px;
+	}
+}
+
+@media screen and (orientation: landscape) and (min-width: 1000px) {
+	* {
+		--img-width: 480px;
+		--img-height: 360px;
+	}
+}
+
+@media screen and (orientation: landscape) and (min-width: 1320px) {
 	* {
 		--img-width: 640px;
 		--img-height: 480px;
 	}
-
-	li h1 {
-		font-size: 45px;
-	}
-
-	li div p {
-		font-size: 55px;
-	}
 }
 
-@media screen and (orientation: portrait) and (max-width: 750px) and (max-height: 1334px) {
+@media screen and (orientation: landscape) and (min-width: 2600px) {
 	* {
-		--img-width: 640px;
-		--img-height: 480px;
-		--form-font-size: 50px;
-	}
-
-	body {
-		padding: 0;
-	}
-
-	#input-area {
-		min-height: 45vh;
-	}
-
-	form button {
-		height: 90px;
-	}
-
-	#download-options > h1 {
-		font-size: 60px;
-	}
-
-	li h1 {
-		font-size: 30px;
-	}
-
-	li div {
-		min-height: 100px;
-	}
-
-	li div p {
-		font-size: 35px;
-	}
-
-	#zip-option p {
-		font-size: 50px;
+		--img-width: 1280px;
+		--img-height: 720px;
 	}
 }
