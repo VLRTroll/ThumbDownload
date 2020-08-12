@@ -36,7 +36,7 @@
 	}
 
 	#content {
-		padding: 5% 0;
+		padding: 2% 0;
 
 		display: grid;
 		grid-auto-columns: 1fr 1fr;
@@ -62,7 +62,7 @@
 	}
 
 	#download-button {
-		margin: 25px 0;
+		margin: 15px 0;
 	}
 }
 

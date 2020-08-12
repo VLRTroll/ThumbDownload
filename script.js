@@ -2,7 +2,7 @@
 const form = document.querySelector('form');
 const formInput = document.querySelector('form input');
 
-const image = document.querySelector('img');
+const image = document.getElementById('thumbnail');
 const downloadButton = document.getElementById('download-button');
 
 const resolutionOptions = Array.from(document.querySelector('ol').children);
@@ -11,6 +11,7 @@ const allOptions = resolutionOptions.concat(zipOption);
 
 /* Setting Constants */
 const defaultImageSize = { width: image.width, heigth: image.height };
+console.log(defaultImageSize);
 let videoId = null;
 let imageBlobs = [];
 
@@ -105,17 +106,17 @@ form.addEventListener('submit', (event) => {
 
 /* Option Section */
 const updateThumbnailImage = (imageIndex) => {
-	const thumbnailsWidthEnum = [120, 320, 480, 680, 1280];
+	const thumbnailsWidthEnum = [120, 320, 480, 640, 1280];
 	const thumbnailsHeightEnum = [90, 180, 360, 480, 720];
 
 	if (thumbnailsWidthEnum[imageIndex] > defaultImageSize.width) {
-		const scale = image.width / thumbnailsWidthEnum[imageIndex];
+		const scale = defaultImageSize.width / thumbnailsWidthEnum[imageIndex];
 
-		image.style.width = `${defaultImageSize.width}px`;
 		image.style.height = `${thumbnailsHeightEnum[imageIndex] * scale}px`;
+		image.style.width = `${defaultImageSize.width}px`;
 	} else {
-		image.style.width = `${thumbnailsWidthEnum[imageIndex]}px`;
 		image.style.height = `${thumbnailsHeightEnum[imageIndex]}px`;
+		image.style.width = `${thumbnailsWidthEnum[imageIndex]}px`;
 	}
 
 	image.src = thumbnailLinks[imageIndex](videoId);
