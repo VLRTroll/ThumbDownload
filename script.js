@@ -11,7 +11,6 @@ const allOptions = resolutionOptions.concat(zipOption);
 
 /* Setting Constants */
 const defaultImageSize = { width: image.width, heigth: image.height };
-console.log(defaultImageSize);
 let videoId = null;
 let imageBlobs = [];
 
@@ -99,8 +98,9 @@ form.addEventListener('submit', (event) => {
 			putThumbnailImage(image.width);
 		}
 	} else {
-		// TODO: Substituir log por um span no HTML
-		console.error('Unsupported URL format');
+		alert(
+			`Unsupported Youtube URL format. Try something like this:\nhttps://www.youtube.com/watch?v=jh4lAnX4K0c\nhttps://youtu.be/jh4lAnX4K0c`
+		);
 	}
 });
 
