@@ -52,9 +52,25 @@
 		margin: 0;
 	}
 
+	form button {
+		height: 70px;
+	}
+
+	li {
+		min-width: 90px;
+	}
+
+	li:not(:first-child) h1 {
+		line-height: unset;
+	}
+
 	#zip-option p,
 	li h1 {
 		color: white;
+	}
+
+	li div {
+		height: 65px;
 	}
 
 	#thumbnail {
